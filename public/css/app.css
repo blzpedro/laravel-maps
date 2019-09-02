@@ -10645,8 +10645,8 @@ a.text-dark:focus {
 }
 
 #map {
-  height: 500px;
-  width: 800px;
+  height: 80vh;
+  width: 50vw;
   margin: 0 auto;
 }
 
@@ -10658,5 +10658,90 @@ body {
   font-weight: 200;
   height: 100vh;
   margin: 0;
+}
+
+#right-panel {
+  font-family: Arial, Helvetica, sans-serif;
+  height: auto;
+  width: 300px;
+  padding: 5px;
+  z-index: 5;
+  background: #fff;
+  float: left;
+}
+
+#right-panel input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+#right-panel input::-webkit-input-placeholder {
+  text-align: center;
+}
+
+#right-panel input::-moz-placeholder {
+  text-align: center;
+}
+
+#right-panel input:-ms-input-placeholder {
+  text-align: center;
+}
+
+#right-panel input::-ms-input-placeholder {
+  text-align: center;
+}
+
+#right-panel input::placeholder {
+  text-align: center;
+}
+
+h5 {
+  font-size: 22px;
+  margin: 0 0 5px 0;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  height: 400px;
+  width: 300px;
+  overflow-y: scroll;
+}
+
+li {
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+li:nth-child(odd) {
+  background-color: #fcfcfc;
+}
+
+.box-btn {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.box-btn #more {
+  width: 100%;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000000;
 }
 
