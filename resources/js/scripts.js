@@ -62,6 +62,7 @@ function initMap() {
             pagination.nextPage();
           };
         });
+        
 
 
     var searchBox = new google.maps.places.SearchBox(document.getElementById('search'));
