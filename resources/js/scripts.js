@@ -1,6 +1,6 @@
 var map;
 var myPos;
-var local = 'restaurant';
+var local = 'night_club';
 
 $(document).ready(function() {
     geoLocationInit();
@@ -12,6 +12,7 @@ $("#locais").change(function(){
   $('#places').text('');
   createMarkers();
 })
+
 
 //Pegar localização
 function geoLocationInit() {
@@ -26,8 +27,15 @@ function success(position) {
     console.log(position);
     var latval = position.coords.latitude;
     var lngval = position.coords.longitude;
+    myPosUrl = latval + ',' + lngval
     myPos = new google.maps.LatLng(latval, lngval);
+    var i;
     initMap();
+    // var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+ myPosUrl +'&radius=1500&type=restaurant&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg'
+    // $(location).attr('href',url);
+    $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+ myPosUrl +'&radius=3000&type='+ local +'&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function(data) {
+        console.log(data.results)
+    });
 }
 
 function fail() {
