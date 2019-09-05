@@ -1,11 +1,17 @@
 var map;
 var myPos;
-var locais;
+var local = 'restaurant';
 
 $(document).ready(function() {
     geoLocationInit();
 });
 
+$("#locais").change(function(){
+  local = $("#locais").val();
+  initMap();
+  $('#places').text('');
+  createMarkers();
+})
 
 //Pegar localização
 function geoLocationInit() {
@@ -51,8 +57,8 @@ function initMap() {
 
     // Realizar pesquisa dos locais.
     service.nearbySearch(
-        // types: restaurant, bar
-        {location: myPos, radius: 3000, type: ['meal_takeaway']},
+        // types: restaurant, bar, meal_delivery, cafe, night_club, shopping_mall, liquor_store
+        {location: myPos, radius: 3000, type: [local]},
         function(results, status, pagination) {
           if (status !== 'OK') return;
 
