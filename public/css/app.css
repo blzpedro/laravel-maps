@@ -10745,3 +10745,10 @@ li:nth-child(odd) {
   background-color: #000000;
 }
 
+.box-locais {
+  width: 25%;
+  display: inline-table;
+  margin: 20px 0;
+  padding: 10px;
+}
+

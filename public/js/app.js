@@ -49490,8 +49490,11 @@ $(document).ready(function () {
 $("#locais").change(function () {
   local = $("#locais").val();
   initMap();
+  console.clear();
   $('#places').text('');
-  createMarkers();
+  $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + myPosUrl + '&radius=3000&type=' + local + '&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function (data) {
+    console.log(data.results);
+  });
 }); //Pegar localização
 
 function geoLocationInit() {
@@ -49503,7 +49506,7 @@ function geoLocationInit() {
 }
 
 function success(position) {
-  console.log(position);
+  // console.log(position);
   var latval = position.coords.latitude;
   var lngval = position.coords.longitude;
   myPosUrl = latval + ',' + lngval;
@@ -49539,6 +49542,9 @@ function initMap() {
   moreButton.onclick = function () {
     moreButton.disabled = true;
     if (getNextPage) getNextPage();
+    $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + myPosUrl + '&radius=3000&type=' + local + '&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function (data) {
+      console.log(data.results);
+    });
   }; // Realizar pesquisa dos locais.
 
 
@@ -49591,9 +49597,26 @@ function createMarkers(places) {
       title: place.name,
       position: place.geometry.location
     });
-    var li = document.createElement('li');
-    li.textContent = place.name;
-    placesList.appendChild(li);
+    var imagemRequest = place.photos[0].getUrl();
+    var div = document.createElement('div');
+    var nomeLocal = document.createElement('p');
+    var notaLocal = document.createElement('p');
+    var avaliacoes = document.createElement('p');
+    var endereco = document.createElement('p');
+    var fotoLocal = document.createElement('img');
+    nomeLocal.textContent = 'Nome do local: ' + place.name;
+    notaLocal.textContent = 'Nota: ' + parseInt(place.rating);
+    avaliacoes.textContent = 'Avaliações: ' + parseInt(place.user_ratings_total);
+    endereco.textContent = 'Endereço: ' + place.vicinity;
+    fotoLocal.setAttribute('src', imagemRequest);
+    fotoLocal.setAttribute('width', '50%');
+    div.appendChild(nomeLocal);
+    div.appendChild(notaLocal);
+    div.appendChild(avaliacoes);
+    div.appendChild(endereco);
+    div.appendChild(fotoLocal);
+    div.className = "box-locais";
+    placesList.appendChild(div);
     bounds.extend(place.geometry.location);
   }
 

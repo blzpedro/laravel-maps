@@ -3,7 +3,10 @@
 @section('content')
 <div class="container">
     <br>
-    <div id="right-panel">
+    <h3 class="text-center">Laravel | Geolocalização</h3>
+    <div id="map">
+    </div>
+    <div id="">
         <select id="locais" style="display: block; margin: 0 auto 20px auto">
             <option value="" disabled selected>Selecione um local
             <option value="restaurant">Restaurantes</option>
@@ -15,14 +18,11 @@
             <option value="liquor_store">Loja de Bebida</option>
         </select>
         <h5>Locais por perto</h5>
-        <ul id="places"></ul>
+        <div id="places"></div>
         <br>
         <div class="box-btn">
             <button class="btn btn-primary" id="more">Mais locais</button>
         </div>
-    </div>
-    <h3 class="text-center">Laravel | Geolocalização</h3>
-    <div id="map">
     </div>
 </div>
 @endsection
