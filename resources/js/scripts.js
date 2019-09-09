@@ -1,6 +1,7 @@
 var map;
 var myPos;
-var local = 'night_club';
+var local = 'cafe';
+var website;
 
 $(document).ready(function() {
     geoLocationInit();
@@ -33,9 +34,7 @@ function success(position) {
     myPosUrl = latval + ',' + lngval
     myPos = new google.maps.LatLng(latval, lngval);
     var i;
-    initMap();
-    // var url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+ myPosUrl +'&radius=1500&type=restaurant&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg'
-    // $(location).attr('href',url);
+    initMap();    
     $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+ myPosUrl +'&radius=3000&type='+ local +'&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function(data) {
         console.log(data.results)
     });
@@ -122,29 +121,49 @@ function initMap() {
         position: place.geometry.location
       });
 
-      var imagemRequest = place.photos[0].getUrl();
+      
+      var getImagem = place.photos[0].getUrl();
       var div = document.createElement('div');
       var nomeLocal = document.createElement('p');
       var notaLocal = document.createElement('p');
       var avaliacoes = document.createElement('p');
       var endereco = document.createElement('p');
+      var placeID = document.createElement('p');
+      var maisInfos = document.createElement('button');
+      var br = document.createElement('br');
       var fotoLocal = document.createElement('img');
       nomeLocal.textContent = 'Nome do local: ' + place.name
       notaLocal.textContent =  'Nota: ' + parseInt(place.rating);
       avaliacoes.textContent =  'Avaliações: ' + parseInt(place.user_ratings_total);
+      placeID.textContent =  place.place_id;
       endereco.textContent =  'Endereço: ' + place.vicinity;
-      fotoLocal.setAttribute('src', imagemRequest);
+      maisInfos.textContent = 'Mais infos';
+      // maisInfos.setAttribute('href', 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+place.place_id+'&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg')
+      maisInfos.setAttribute('class', 'btnInfos')
+      // maisInfos.setAttribute('data-toggle', 'modal')
+      // maisInfos.setAttribute('data-target', '#modalExemplo')
+        $('button').click(function(){
+        //   $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid='+ placeIDD +'&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function(data) {    
+        //     console.log(data.result.name)     
+        //     console.log(data.result.opening_hours.open_now)
+        //     console.log(data.result.opening_hours.weekday_text)
+        //   });
+        });
+        // console.log(i)
+      fotoLocal.setAttribute('src', getImagem);
       fotoLocal.setAttribute('width', '50%');
       div.appendChild(nomeLocal);
       div.appendChild(notaLocal);
       div.appendChild(avaliacoes);
       div.appendChild(endereco);
+      div.appendChild(placeID);
+      div.appendChild(maisInfos);
+      div.appendChild(br)
       div.appendChild(fotoLocal);
       div.className = "box-locais"
       placesList.appendChild(div); 
-
+      
       bounds.extend(place.geometry.location);
     }
     map.fitBounds(bounds);
   }
- 
