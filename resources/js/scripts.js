@@ -1,6 +1,6 @@
 var map;
 var myPos;
-var local = 'cafe';
+var local = 'restaurant';
 var website;
 
 $(document).ready(function() {
@@ -23,7 +23,7 @@ function geoLocationInit() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success, fail);
     } else {
-        alert("Navegador não suportado :(.");
+        alert("Navegador não suportado, tente em outro!");
     }
 }
 
@@ -33,7 +33,6 @@ function success(position) {
     var lngval = position.coords.longitude;
     myPosUrl = latval + ',' + lngval
     myPos = new google.maps.LatLng(latval, lngval);
-    var i;
     initMap();    
     $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+ myPosUrl +'&radius=3000&type='+ local +'&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function(data) {
         console.log(data.results)
@@ -45,10 +44,11 @@ function fail() {
 }
 
 function initMap() {
+  
     // Criar o mapa.
     map = new google.maps.Map(document.getElementById('map'), {
       center: myPos,
-      zoom: 16
+      zoom: 14
     });
     
     var marker = new google.maps.Marker({
@@ -56,7 +56,7 @@ function initMap() {
         map: map
     });
 
-    // Criar lista dos locais
+    // Realizar a busca de mais locais
     var service = new google.maps.places.PlacesService(map);
     var getNextPage = null;
     var moreButton = document.getElementById('more');
@@ -81,26 +81,9 @@ function initMap() {
             pagination.nextPage();
           };
         });
-        
-
-
-    var searchBox = new google.maps.places.SearchBox(document.getElementById('search'));
-
-    google.maps.event.addDomListener(searchBox, 'places_changed', function() {
-            var places = searchBox.getPlaces();
-            var bounds = new google.maps.LatLngBounds();
-            var i, place;
-    
-            for (i = 0; place = places[i]; i++) {
-                bounds.extend(place.geometry.location);
-                marker.setPosition(place.geometry.location);
-            }
-            map.fitBounds(bounds);
-            map.setZoom(16);
-        })
   }
 
-  // Criar os marcadores nos locais
+  // Criar a lista dos locais
   function createMarkers(places) {
     var bounds = new google.maps.LatLngBounds();
     var placesList = document.getElementById('places');
@@ -128,8 +111,9 @@ function initMap() {
       var notaLocal = document.createElement('p');
       var avaliacoes = document.createElement('p');
       var endereco = document.createElement('p');
-      var placeID = document.createElement('p');
-      var maisInfos = document.createElement('button');
+      var irParaLocal = document.createElement('a');
+      var placeID = document.createElement('a');
+      // var maisInfos = document.createElement('button');
       var br = document.createElement('br');
       var fotoLocal = document.createElement('img');
       nomeLocal.textContent = 'Nome do local: ' + place.name
@@ -137,19 +121,20 @@ function initMap() {
       avaliacoes.textContent =  'Avaliações: ' + parseInt(place.user_ratings_total);
       placeID.textContent =  place.place_id;
       endereco.textContent =  'Endereço: ' + place.vicinity;
-      maisInfos.textContent = 'Mais infos';
-      // maisInfos.setAttribute('href', 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+place.place_id+'&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg')
-      maisInfos.setAttribute('class', 'btnInfos')
+      irParaLocal.textContent =  'Ir até o local';
+      // maisInfos.textContent = 'Mais infos';
+      // https://www.google.com/maps/dir/Rua+Isabel+Schmidt,+369+-+Santo+Amaro,+S%C3%A3o+Paulo+-+SP,+04735-000,+Brasil/Av.+Mal.+Deodoro,+136+-+Gonzaga,+Santos+-+SP,+11060-401,+Brasil
+      irParaLocal.setAttribute('href', 'https://www.google.com/maps/dir/'+ myPosUrl +'/'+ place.vicinity +'/');
+      irParaLocal.setAttribute('target', '_blank');
+      placeID.setAttribute('href', 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+ place.place_id +'&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg');
+      placeID.setAttribute('target', '_blank');
+      placeID.setAttribute('class', 'infos');
+      // maisInfos.setAttribute('id', 'btnInfo');
       // maisInfos.setAttribute('data-toggle', 'modal')
-      // maisInfos.setAttribute('data-target', '#modalExemplo')
-        $('button').click(function(){
-        //   $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid='+ placeIDD +'&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function(data) {    
-        //     console.log(data.result.name)     
-        //     console.log(data.result.opening_hours.open_now)
-        //     console.log(data.result.opening_hours.weekday_text)
-        //   });
-        });
-        // console.log(i)
+      // maisInfos.setAttribute('data-target', '#modalExemplo')      
+      // console.log(i)
+      // maisInfos.classList.add(place.place_id);   
+      placeID.setAttribute('style', 'display: block;');
       fotoLocal.setAttribute('src', getImagem);
       fotoLocal.setAttribute('width', '50%');
       div.appendChild(nomeLocal);
@@ -157,8 +142,9 @@ function initMap() {
       div.appendChild(avaliacoes);
       div.appendChild(endereco);
       div.appendChild(placeID);
-      div.appendChild(maisInfos);
-      div.appendChild(br)
+      div.appendChild(irParaLocal);
+      // div.appendChild(maisInfos);
+      div.appendChild(br);
       div.appendChild(fotoLocal);
       div.className = "box-locais"
       placesList.appendChild(div); 
@@ -167,3 +153,6 @@ function initMap() {
     }
     map.fitBounds(bounds);
   }
+
+
+  
