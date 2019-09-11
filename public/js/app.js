@@ -49483,14 +49483,13 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$('#btnInfo').click(function () {
-  var txtClass = $(this).attr("class"); // $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid='+ txtClass +'&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function(data) {    
+$('.infos').click(function () {
+  // $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid='+ txtClass +'&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function(data) {    
   //   console.log(data.result.name)     
   //   console.log(data.result.opening_hours.open_now)
   //   console.log(data.result.opening_hours.weekday_text)
   // });
-
-  console.log(txtClass);
+  alert('a');
 });
 
 /***/ }),
@@ -49608,41 +49607,49 @@ function createMarkers(places) {
     var notaLocal = document.createElement('p');
     var avaliacoes = document.createElement('p');
     var endereco = document.createElement('p');
+    var telefone = document.createElement('p');
+    var horario = document.createElement('p');
+    var site = document.createElement('p');
     var irParaLocal = document.createElement('a');
-    var placeID = document.createElement('a'); // var maisInfos = document.createElement('button');
-
+    var maisInfos = document.createElement('button');
     var br = document.createElement('br');
     var fotoLocal = document.createElement('img');
     nomeLocal.textContent = 'Nome do local: ' + place.name;
     notaLocal.textContent = 'Nota: ' + parseInt(place.rating);
-    avaliacoes.textContent = 'Avaliações: ' + parseInt(place.user_ratings_total);
-    placeID.textContent = place.place_id;
+    avaliacoes.textContent = 'Avaliações: ' + parseInt(place.user_ratings_total); // placeID.textContent =  place.place_id;
+
     endereco.textContent = 'Endereço: ' + place.vicinity;
-    irParaLocal.textContent = 'Ir até o local'; // maisInfos.textContent = 'Mais infos';
-    // https://www.google.com/maps/dir/Rua+Isabel+Schmidt,+369+-+Santo+Amaro,+S%C3%A3o+Paulo+-+SP,+04735-000,+Brasil/Av.+Mal.+Deodoro,+136+-+Gonzaga,+Santos+-+SP,+11060-401,+Brasil
+    irParaLocal.textContent = 'Ir até o local';
+    maisInfos.textContent = 'Mais infos'; // https://www.google.com/maps/dir/Rua+Isabel+Schmidt,+369+-+Santo+Amaro,+S%C3%A3o+Paulo+-+SP,+04735-000,+Brasil/Av.+Mal.+Deodoro,+136+-+Gonzaga,+Santos+-+SP,+11060-401,+Brasil
 
     irParaLocal.setAttribute('href', 'https://www.google.com/maps/dir/' + myPosUrl + '/' + place.vicinity + '/');
-    irParaLocal.setAttribute('target', '_blank');
-    placeID.setAttribute('href', 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + place.place_id + '&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg');
-    placeID.setAttribute('target', '_blank');
-    placeID.setAttribute('class', 'infos'); // maisInfos.setAttribute('id', 'btnInfo');
-    // maisInfos.setAttribute('data-toggle', 'modal')
-    // maisInfos.setAttribute('data-target', '#modalExemplo')      
-    // console.log(i)
-    // maisInfos.classList.add(place.place_id);   
+    irParaLocal.setAttribute('target', '_blank'); // placeID.setAttribute('href', 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+ place.place_id +'&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg');
+    // placeID.setAttribute('target', '_blank');
 
-    placeID.setAttribute('style', 'display: block;');
+    telefone.setAttribute('class', 'infosTel');
+    site.setAttribute('class', 'infosSite');
+    horario.setAttribute('class', 'infosHora');
+    $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid=' + place.place_id + '&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function (data) {
+      $('.infosTel').text('Telefone:' + data.result.formatted_phone_number);
+      $('.infosHora').text('Horário:' + data.result.opening_hours.weekday_text);
+      $('.infosSite').text('Site:' + data.result.website);
+      console.log(data.result.website);
+    });
+    maisInfos.setAttribute('id', 'btnInfo');
+    maisInfos.setAttribute('data-toggle', 'modal');
+    maisInfos.setAttribute('data-target', '#modalExemplo');
+    irParaLocal.setAttribute('style', 'display: block;');
     fotoLocal.setAttribute('src', getImagem);
     fotoLocal.setAttribute('width', '50%');
     div.appendChild(nomeLocal);
     div.appendChild(notaLocal);
     div.appendChild(avaliacoes);
     div.appendChild(endereco);
-    div.appendChild(placeID);
-    div.appendChild(irParaLocal); // div.appendChild(maisInfos);
-
+    div.appendChild(irParaLocal);
+    div.appendChild(maisInfos);
     div.appendChild(br);
     div.appendChild(fotoLocal);
+    $(".infoLocal").append(telefone, horario, site);
     div.className = "box-locais";
     placesList.appendChild(div);
     bounds.extend(place.geometry.location);
@@ -49671,8 +49678,8 @@ function createMarkers(places) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\tcc\tcc\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\tcc\tcc\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp7.3\htdocs\tcc-old\tcc\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp7.3\htdocs\tcc-old\tcc\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
