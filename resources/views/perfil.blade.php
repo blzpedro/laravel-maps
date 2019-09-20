@@ -7,7 +7,7 @@
             <a class="font-bold large-4 small-4 medium-4" href="{{url('/')}}">
                 <li>Ínicio</li>
             </a>
-            <a class="font-bold large-4 small-4 medium-4" href="{{url('/back')}}">
+            <a class="font-bold large-4 small-4 medium-4" href="{{url('/places')}}">
                 <li>Ver locais</li>
             </a>
             <a class="font-bold large-4 small-4 medium-4" href="{{url('/')}}">

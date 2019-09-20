@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'IndexController@index');
-Route::get('/back', 'BackController@index');
+Route::get('/places', 'PlacesController@index');
 Route::get('/login', 'LoginController@index');
 Route::get('/perfil', 'PerfilController@index');
 

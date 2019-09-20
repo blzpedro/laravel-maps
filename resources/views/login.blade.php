@@ -32,7 +32,7 @@
                             <div class="large-12 small-12 medium-12 grid-x">
                                     <div class=" box-botao-comecar float-center ">
                                         <br>
-                                        <a href="{{url('back')}}" class="botao-comecar hvr-linha-esquerda" style="">ENTRAR »</a>
+                                        <a href="{{url('places')}}" class="botao-comecar hvr-linha-esquerda" style="">ENTRAR »</a>
                                     </div>
                                 </div>  
                         </div>
