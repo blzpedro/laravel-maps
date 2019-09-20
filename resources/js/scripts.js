@@ -149,26 +149,26 @@ function initMap() {
       telefone.setAttribute('class', 'infosTel');
       site.setAttribute('class', 'infosSite');
       horario.setAttribute('class', 'infosHora');
+      maisInfos.setAttribute('class', 'button');
       maisInfos.setAttribute('id', 'btnInfo');
       maisInfos.setAttribute('data-toggle', 'modal')
       maisInfos.setAttribute('data-target', '#modal'+place.place_id)  
-      irParaLocal.setAttribute('style', 'display: block;');
+      irParaLocal.setAttribute('style', 'display: inherit;margin: 10px auto;');
       fotoLocal.setAttribute('src', getImagem);
-      fotoLocal.setAttribute('width', '50%');
+      fotoLocal.setAttribute('class', 'imagem-local');
 
 
 
+      div.appendChild(fotoLocal);
       div.appendChild(nomeLocal);
       div.appendChild(notaLocal);
       div.appendChild(avaliacoes);
       div.appendChild(endereco);
       div.appendChild(irParaLocal);
       div.appendChild(maisInfos);
-      div.appendChild(br);
-      div.appendChild(fotoLocal);
       modal.innerHTML
       div.appendChild(modal)
-      div.className = "box-locais"
+      div.className = "box-locais"   
       placesList.appendChild(div); 
       bounds.extend(place.geometry.location);
      

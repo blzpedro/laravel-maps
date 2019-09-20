@@ -52,9 +52,9 @@ li {
     white-space: nowrap;
     overflow: hidden;
 }
-li:nth-child(odd) {
-    background-color: #fcfcfc;
-}
+// li:nth-child(odd) {
+//     background-color: #fcfcfc;
+// }
 
 .box-btn{
     margin: 0 auto;
@@ -83,6 +83,10 @@ li:nth-child(odd) {
     display: inline-table;
     margin: 20px 0;
     padding: 10px;
+    background-color: white;
+    color: black;  
+    height: 450px;
+    margin: 0 4.16% 60px 4.16%;
 }
 
 .btnInfos{

@@ -1,0 +1,61 @@
+////////////////////////////////////////////// MOBILE //////////////////////////////////////////////@at-root
+
+@media screen and(max-width: 640px) {
+    header ul li{
+        padding: 15px 5px;
+        font-size: 12px;
+    }
+
+    .titulo {
+        font-size: 34px;
+        text-align: center;
+    }
+
+    .texto{
+        text-align: center;
+    }
+
+    .sessao-dois,
+    .sessao-tres {
+        height: 250px;
+        background-size: auto;
+    }
+
+    .sessao-quatro {
+        h2 {
+            font-size: 30px;
+            text-align: center;
+        }
+
+        p {
+            margin: 75px auto;
+        }
+    }
+
+    .hr{
+        margin-top: -30px !important;
+        border-top: 1px solid white !important;
+        border: 0;
+    }
+
+    .botao-comecar{
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 13px;
+    }
+}
+
+@media screen and(max-width: 600px){
+    .down .descer{
+        margin-top: 0;
+    }
+    .logo{
+        top: 0;
+    }
+}
+
+@media screen and(max-width: 400px){
+    header ul li{
+        height: 100%;
+    }
+}

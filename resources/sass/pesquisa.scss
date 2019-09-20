@@ -1,0 +1,16 @@
+.box-filtros{
+    p{
+        color: $primaria;
+        font-size: 20px;
+        height: 30px;
+        margin-bottom: 0;
+    }
+
+    select{
+        margin: 0 0 3.5222rem !important;
+        border: 2px solid $primaria;
+        &:hover, &:focus, &:active{
+            border: 2px solid $primaria;
+          }
+    } 
+}

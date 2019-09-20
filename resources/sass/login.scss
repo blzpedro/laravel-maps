@@ -1,0 +1,20 @@
+.box-login{
+    margin: 0 auto; 
+    display: block;
+    label{
+        color: $primaria;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    input{
+        border: 2px solid $primaria;
+
+        &:hover, &:focus{
+            border: 2px solid $primaria;
+          }
+    }
+}
+
+.inputCadastro{
+  margin-left: 60px;
+}

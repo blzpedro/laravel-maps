@@ -1,0 +1,64 @@
+.logo-acima{
+    top: 10%;
+}
+
+.sessao-um-acima, .sessao-dois-acima{
+    height: 30vh;
+}
+
+.menu-ativo{
+    display: block;
+}
+
+.box-resultado{
+    background-color: white;
+    height: 500px;
+    margin: 0 4.16% 60px 4.16%;
+    @media screen and (max-width: 640px){      
+        margin: 0 auto 30px auto;
+    }
+}
+
+
+.imagem-local{
+    background-color: black;
+    height: 120px;
+    display: block;
+    margin: 25px auto 0 auto;
+    border-radius: 50%;
+    width: 50%;
+    p{
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+    }
+}
+
+.texto-local{
+    color: black;
+    margin: 20px auto;
+    display: block;
+    text-align: center;
+    span{
+        color: $primaria;
+        font-weight: bold;
+    }
+    p{
+        margin-bottom: 0;
+    }
+
+    a{
+        color: $primaria;
+        cursor: pointer;
+        transition: .2s all;
+        &:hover{
+            color: $primaria;
+            border-bottom: 3px solid black;
+        }
+    }
+}
+
+#btnInfo{    
+    display: block;
+    margin: 0 auto;
+}
