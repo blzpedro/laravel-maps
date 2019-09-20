@@ -35,8 +35,10 @@ function success(position) {
     myPos = new google.maps.LatLng(latval, lngval);
     initMap();    
     $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+ myPosUrl +'&radius=3000&type='+ local +'&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function(data) {
-        console.log(data.results)
+        // console.log(data.results)
     });
+    
+   
 }
 
 function fail() {
@@ -84,6 +86,9 @@ function initMap() {
   }
 
   // Criar a lista dos locais
+  var urlDetail;
+  var placeIDs = [];
+
   function createMarkers(places) {
     var bounds = new google.maps.LatLngBounds();
     var placesList = document.getElementById('places');
@@ -104,6 +109,8 @@ function initMap() {
         position: place.geometry.location
       });
 
+     var modal = document.createElement('div')
+     modal.innerHTML = '<div class="modal fade" id="modal'+place.place_id+'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> <div class="modal-dialog" role="document"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel"></h5> <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"> <span aria-hidden="true">&times;</span> </button> </div> <div class="modal-body"> <div class="infoLocal"><input id="input_id" type="hidden" value="'+place.place_id+'"></div> </div> </div> </div> </div>'
       
       var getImagem = place.photos[0].getUrl();
       var div = document.createElement('div');
@@ -111,48 +118,76 @@ function initMap() {
       var notaLocal = document.createElement('p');
       var avaliacoes = document.createElement('p');
       var endereco = document.createElement('p');
+      var telefone = document.createElement('p');
+      var horario = document.createElement('p');
+      var site = document.createElement('p');
       var irParaLocal = document.createElement('a');
-      var placeID = document.createElement('a');
-      // var maisInfos = document.createElement('button');
+      var maisInfos = document.createElement('button');
       var br = document.createElement('br');
       var fotoLocal = document.createElement('img');
       nomeLocal.textContent = 'Nome do local: ' + place.name
       notaLocal.textContent =  'Nota: ' + parseInt(place.rating);
       avaliacoes.textContent =  'Avaliações: ' + parseInt(place.user_ratings_total);
-      placeID.textContent =  place.place_id;
+      placeIDs.push(place.place_id);
       endereco.textContent =  'Endereço: ' + place.vicinity;
       irParaLocal.textContent =  'Ir até o local';
-      // maisInfos.textContent = 'Mais infos';
-      // https://www.google.com/maps/dir/Rua+Isabel+Schmidt,+369+-+Santo+Amaro,+S%C3%A3o+Paulo+-+SP,+04735-000,+Brasil/Av.+Mal.+Deodoro,+136+-+Gonzaga,+Santos+-+SP,+11060-401,+Brasil
+      maisInfos.textContent = 'Mais infos';
       irParaLocal.setAttribute('href', 'https://www.google.com/maps/dir/'+ myPosUrl +'/'+ place.vicinity +'/');
       irParaLocal.setAttribute('target', '_blank');
-      placeID.setAttribute('href', 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+ place.place_id +'&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg');
-      placeID.setAttribute('target', '_blank');
-      placeID.setAttribute('class', 'infos');
-      // maisInfos.setAttribute('id', 'btnInfo');
-      // maisInfos.setAttribute('data-toggle', 'modal')
-      // maisInfos.setAttribute('data-target', '#modalExemplo')      
-      // console.log(i)
-      // maisInfos.classList.add(place.place_id);   
-      placeID.setAttribute('style', 'display: block;');
+      telefone.setAttribute('class', 'infosTel');
+      site.setAttribute('class', 'infosSite');
+      horario.setAttribute('class', 'infosHora');
+      maisInfos.setAttribute('id', 'btnInfo');
+      maisInfos.setAttribute('data-toggle', 'modal')
+      maisInfos.setAttribute('data-target', '#modal'+place.place_id)  
+      irParaLocal.setAttribute('style', 'display: block;');
       fotoLocal.setAttribute('src', getImagem);
       fotoLocal.setAttribute('width', '50%');
       div.appendChild(nomeLocal);
       div.appendChild(notaLocal);
       div.appendChild(avaliacoes);
       div.appendChild(endereco);
-      div.appendChild(placeID);
       div.appendChild(irParaLocal);
-      // div.appendChild(maisInfos);
+      div.appendChild(maisInfos);
       div.appendChild(br);
       div.appendChild(fotoLocal);
+      modal.innerHTML
+      div.appendChild(modal)
       div.className = "box-locais"
       placesList.appendChild(div); 
-      
       bounds.extend(place.geometry.location);
+     
+      $('#modal'+place.place_id).on('show.bs.modal', function(){
+        var id = this.id;
+       infos(id);
+      });
+      
     }
-    map.fitBounds(bounds);
+    map.fitBounds(bounds);    
+
   }
 
-
-  
+  function infos(id){
+    $('.infoLocal').html('')
+    $('.modal-title').html('')
+    var horario;
+    var telefone;
+    var website;
+    id = id.replace('modal','')
+    url ='https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid='+ id +'&fields=name,opening_hours,website,rating,formatted_phone_number&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg'
+    
+    $.ajax({url: url, success: function(result){
+      nome = result.result.name;
+      horario = result.result.opening_hours.weekday_text;
+      website = result.result.website;
+      telefone = result.result.formatted_phone_number;
+      // if (0<1){
+      //   alert('a')
+      // }
+      titulo = '<h5>Informações do local: '+nome+'</h5>';
+      html = '<p>Horários: '+horario+'</p><p>Telefone: '+telefone+'</p><p>Site: <a href="'+website+'" target="_blank">'+website+'</a><p>'
+      $('.infoLocal').append(html)      
+      $('.modal-title').append(titulo)
+    }});
+    
+  }
