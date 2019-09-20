@@ -125,13 +125,25 @@ function initMap() {
       var maisInfos = document.createElement('button');
       var br = document.createElement('br');
       var fotoLocal = document.createElement('img');
+
+      if (place.rating == undefined){
+        place.rating = 0;
+      }
+
+      if (place.user_ratings_total == undefined){
+        place.user_ratings_total = 0;
+      }
+
       nomeLocal.textContent = 'Nome do local: ' + place.name
-      notaLocal.textContent =  'Nota: ' + parseInt(place.rating);
-      avaliacoes.textContent =  'Avaliações: ' + parseInt(place.user_ratings_total);
+      notaLocal.textContent =  'Nota: ' + place.rating;
+      avaliacoes.textContent =  'Avaliações: ' + place.user_ratings_total;
       placeIDs.push(place.place_id);
       endereco.textContent =  'Endereço: ' + place.vicinity;
       irParaLocal.textContent =  'Ir até o local';
       maisInfos.textContent = 'Mais infos';
+
+      
+
       irParaLocal.setAttribute('href', 'https://www.google.com/maps/dir/'+ myPosUrl +'/'+ place.vicinity +'/');
       irParaLocal.setAttribute('target', '_blank');
       telefone.setAttribute('class', 'infosTel');
@@ -143,6 +155,9 @@ function initMap() {
       irParaLocal.setAttribute('style', 'display: block;');
       fotoLocal.setAttribute('src', getImagem);
       fotoLocal.setAttribute('width', '50%');
+
+
+
       div.appendChild(nomeLocal);
       div.appendChild(notaLocal);
       div.appendChild(avaliacoes);
@@ -181,11 +196,14 @@ function initMap() {
       horario = result.result.opening_hours.weekday_text;
       website = result.result.website;
       telefone = result.result.formatted_phone_number;
-      // if (0<1){
-      //   alert('a')
-      // }
       titulo = '<h5>Informações do local: '+nome+'</h5>';
-      html = '<p>Horários: '+horario+'</p><p>Telefone: '+telefone+'</p><p>Site: <a href="'+website+'" target="_blank">'+website+'</a><p>'
+
+      if (website == undefined){
+        var websiteUndefined = '';
+        html = '<p>Horários: '+horario+'</p><p>Telefone: <a href="tel:'+telefone+'">'+telefone+'</a></p>'+ websiteUndefined
+      } else {
+        html = '<p>Horários: '+horario+'</p><p>Telefone: <a href="tel:'+telefone+'">'+telefone+'</a></p><p>Site: <a href="'+website+'" target="_blank">'+website+'</a><p>'
+      }
       $('.infoLocal').append(html)      
       $('.modal-title').append(titulo)
     }});
