@@ -16,7 +16,7 @@
         </ul>
     </nav>
 </header>
-<div class="sessao-um large-12 small-12 medium-12" id="topo">
+<div class="sessao-um fundo-maps large-12 small-12 medium-12" id="topo">
     <div class="sessao-um-opacity">
         <div id="map" style="position: relative;top: 15vh;bottom: 5vh;">
         </div>
