@@ -25,8 +25,7 @@
                         <img src="{{asset('images/down-arrow.png')}}" alt="Descer" class="logo descer">
                     </a>
                 </div>
-        </div>
-            
+        </div>        
         <div class="fundo-preto large-12 grid-x">
             <div class="paragrafo-box large-8 grid-container" id="0">
                 <h1 class="font-bold titulo" id="1">COMECE AGORA</h1>     

@@ -2,6 +2,9 @@
     height: 80vh;
     width: 50vw;
     margin: 0 auto;
+    @media screen and (max-width: 1024px){
+        width: 80vw;
+    }
 }
 
 html, body {
@@ -87,8 +90,38 @@ li {
     color: black;  
     height: 450px;
     margin: 0 4.16% 60px 4.16%;
+    a{
+        color: orange;
+        &:hover{            
+            transition: .7s all;
+            color: orange;
+        }
+    }
+    @media screen and(max-width: 900px){
+        width: 40%;
+        margin: 5% 5%;
+    }
+
+    @media screen and(max-width: 650px){
+        width: 70%;
+        margin: 5% 15%;
+    }
+
+    @media screen and(max-width: 420px){
+        width: 90%;
+        margin: 5% 5%;
+    }
 }
 
-.btnInfos{
-    display: block;
+#more, #btnInfo{
+    background-color: orange;
+    color: black;
+    border: 3px solid transparent;
+    font-weight: bold;
+    transition: .7s all;
+    &:hover{
+        background-color: orange;
+        border: 3px solid black;
+        color: black;
+    }
 }

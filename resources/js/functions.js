@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	
     /* ---------- Form contato ---------- */	
         
         $("#btn-enviar").click(function(e){

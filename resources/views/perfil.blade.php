@@ -19,7 +19,7 @@
     <main class="grid-x" id="topo">
         <div class="sessao-um large-12 small-12 medium-12">
                 <div class="sessao-um-opacity">            
-                    <h1 class="logo">GUIA DA BAIXADA <br> <span style="font-size: 30px">Veja seu perfil e altere seus dados!</span></h1>
+                    <h1 class="logo">GUIA DA BAIXADA | Perfil</h1>
                     <a class="down" href="#0">
                         <img src="images/down-arrow.png" alt="Descer" class="logo descer">
                     </a>

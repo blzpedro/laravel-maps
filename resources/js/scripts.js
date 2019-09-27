@@ -64,10 +64,13 @@ function initMap() {
     var moreButton = document.getElementById('more');
     moreButton.onclick = function() {
       moreButton.disabled = true;
+      if (moreButton.disabled == true){
+        alert('Não há mais locais desse tipo por perto! Selecione outro tipo de local :).')
+      }
       if (getNextPage) getNextPage();
-      $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+ myPosUrl +'&radius=3000&type='+ local +'&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function(data) {
-          console.log(data.results)
-      });
+      // $.getJSON('https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+ myPosUrl +'&radius=3000&type='+ local +'&key=AIzaSyA-5eVqeQ5c9jyCmS5k1V4NYVKDGYPacVg', function(data) {
+      //     console.log(data.results)
+      // });
     };
 
     // Realizar pesquisa dos locais.
@@ -79,6 +82,7 @@ function initMap() {
 
           createMarkers(results);
           moreButton.disabled = !pagination.hasNextPage;
+          
           getNextPage = pagination.hasNextPage && function() {
             pagination.nextPage();
           };
@@ -114,6 +118,7 @@ function initMap() {
       
       var getImagem = place.photos[0].getUrl();
       var div = document.createElement('div');
+      var section = document.createElement('section');
       var nomeLocal = document.createElement('p');
       var notaLocal = document.createElement('p');
       var avaliacoes = document.createElement('p');
@@ -123,7 +128,6 @@ function initMap() {
       var site = document.createElement('p');
       var irParaLocal = document.createElement('a');
       var maisInfos = document.createElement('button');
-      var br = document.createElement('br');
       var fotoLocal = document.createElement('img');
 
       if (place.rating == undefined){
@@ -134,13 +138,13 @@ function initMap() {
         place.user_ratings_total = 0;
       }
 
-      nomeLocal.textContent = 'Nome do local: ' + place.name
-      notaLocal.textContent =  'Nota: ' + place.rating;
-      avaliacoes.textContent =  'Avaliações: ' + place.user_ratings_total;
+      nomeLocal.innerHTML = '<span>Nome do local:</span><br> ' + place.name
+      notaLocal.innerHTML =  '<span>Nota:</span><br> ' + place.rating;
+      avaliacoes.innerHTML =  '<span>Avaliações:</span><br> ' + place.user_ratings_total;
       placeIDs.push(place.place_id);
-      endereco.textContent =  'Endereço: ' + place.vicinity;
-      irParaLocal.textContent =  'Ir até o local';
-      maisInfos.textContent = 'Mais infos';
+      endereco.innerHTML =  '<span>Endereço:</span><br> ' + place.vicinity;
+      irParaLocal.innerHTML =  'Ver a rota até o local';
+      maisInfos.innerHTML = 'Sobre o local';
 
       
 
@@ -151,24 +155,18 @@ function initMap() {
       horario.setAttribute('class', 'infosHora');
       maisInfos.setAttribute('class', 'button');
       maisInfos.setAttribute('id', 'btnInfo');
-      maisInfos.setAttribute('data-toggle', 'modal')
+      maisInfos.setAttribute('data-toggle', 'modal');
       maisInfos.setAttribute('data-target', '#modal'+place.place_id)  
       irParaLocal.setAttribute('style', 'display: inherit;margin: 10px auto;');
+      irParaLocal.setAttribute('class', 'hvr-left');
       fotoLocal.setAttribute('src', getImagem);
       fotoLocal.setAttribute('class', 'imagem-local');
 
 
-
-      div.appendChild(fotoLocal);
-      div.appendChild(nomeLocal);
-      div.appendChild(notaLocal);
-      div.appendChild(avaliacoes);
-      div.appendChild(endereco);
-      div.appendChild(irParaLocal);
-      div.appendChild(maisInfos);
-      modal.innerHTML
-      div.appendChild(modal)
-      div.className = "box-locais"   
+      section.append(fotoLocal, nomeLocal, notaLocal, avaliacoes, endereco);
+      div.append(section, irParaLocal, maisInfos, modal);
+      modal.innerHTML;
+      div.className = "box-locais";   
       placesList.appendChild(div); 
       bounds.extend(place.geometry.location);
      
@@ -200,9 +198,9 @@ function initMap() {
 
       if (website == undefined){
         var websiteUndefined = '';
-        html = '<p>Horários: '+horario+'</p><p>Telefone: <a href="tel:'+telefone+'">'+telefone+'</a></p>'+ websiteUndefined
+        html = '<p>Horários: '+horario+'</p><p>Telefone(s): <a href="tel:'+telefone+'">'+telefone+'</a></p>'+ websiteUndefined
       } else {
-        html = '<p>Horários: '+horario+'</p><p>Telefone: <a href="tel:'+telefone+'">'+telefone+'</a></p><p>Site: <a href="'+website+'" target="_blank">'+website+'</a><p>'
+        html = '<p>Horários: '+horario+'</p><p>Telefone(s): <a href="tel:'+telefone+'">'+telefone+'</a></p><p>Site: <a href="'+website+'" target="_blank">'+website+'</a><p>'
       }
       $('.infoLocal').append(html)      
       $('.modal-title').append(titulo)
